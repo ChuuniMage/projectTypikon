@@ -1,0 +1,8 @@
+momentTest.ts - Works, has the function I want to spit out Church-Year-Ified moment object
+fixedFeasts.ts - Works, can get the appropriate feast from the list
+paschaCalculation.ts - Works! 
+variableFeasts.ts - Works!
+feastFetcher - List of feasts isn't concatonating properly
+feastsInMonth
+
+Input type that is :X or Y, not just X | Y

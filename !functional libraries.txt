@@ -1,0 +1,13 @@
+Functional libraries for typescript
+---
+github.com/gcanti/fp-ts
+https://true-myth.js.org
+
+Immutable data structures
+---
+github.com/pelotom/type-zoo
+github.com/emmanueltouzery/prelude.ts
+
+Algebraic data types
+---
+gigobyte.github.io/pure
