@@ -96,23 +96,21 @@ let postPaschaVariableOtherDays: Record<number, string> = {
 //Saturday closest to October 26: Demetrius of Thessaloniki
 
 //Can this be made generic, to accept (Index, dictionary1, dictionary2 ...dictioneryN)?
-function returnSecondDictionaryIfFirstIsNull(dictionary1:Record<number, string>, dictionary2:Record<number, string>, index:number):string{
-    if (dictionary1[index] != undefined){
-        return dictionary1[index];
-    } else {
-        return dictionary2[index];
+function lookupVariableFeast(lookupIndex:number, dictionaries:Record<number, string>[] ): string|undefined {
+    for (let i = 0; i < dictionaries.length; i++) {
+        if  (dictionaries[i][lookupIndex] != undefined) {
+            return dictionaries[i][lookupIndex];
+        }
     }
 };
 
 function returnPreOrPostPaschaVariableFeast(dictionaryIndex:number){
     if (dictionaryIndex < 0){ 
         dictionaryIndex = (dictionaryIndex * -1)
-        return returnSecondDictionaryIfFirstIsNull
-        (prePaschaVariableSundays, prePaschaVariableOtherDays, dictionaryIndex)
+        return lookupVariableFeast(dictionaryIndex, [prePaschaVariableSundays, prePaschaVariableOtherDays]);
     } else {
-        return returnSecondDictionaryIfFirstIsNull
-        (postPaschaVariableSundays, postPaschaVariableOtherDays, dictionaryIndex)
- } 
+        return lookupVariableFeast(dictionaryIndex, [postPaschaVariableSundays, postPaschaVariableOtherDays]);
+    }
 };
 
 export function returnVariableFeastFromChurchMoment(inputPaschaMoment:moment.Moment, inputMoment:moment.Moment):string|undefined{
