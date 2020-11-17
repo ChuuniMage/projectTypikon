@@ -1,5 +1,4 @@
 import moment from 'moment';
-//
 
 let greatFeastDictionary: Record<string, Record<number, string>> = {
     "September": {

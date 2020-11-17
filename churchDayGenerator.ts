@@ -4,7 +4,7 @@ import { returnGreatFeastFromChurchMoment } from "./finishedModules/greatFeasts"
 import { paschaCalculation, } from "./finishedModules/paschaCalculation"
 import { churchMoment } from './finishedModules/churchMoment';
 import { returnVariableFeastFromChurchMoment } from './finishedModules/variableFeasts'
-import { returnCommemoratedSaintsFromChurchMoment } from './dataEntryNeeded/commemoratedSaints'
+import { returnCommemoratedSaintsFromChurchMoment } from '../dataEntryNeeded/commemoratedSaints'
 
 interface churchDayType {
     isPascha: boolean;
@@ -29,7 +29,7 @@ export class churchDay implements churchDayType {
         let thisYearsPascha = paschaCalculation(normieDayMoment.clone());
         this.isPascha = thisYearsPascha.isSame(this.churchDayMoment, 'day');
 
-        this.variableFeast = returnVariableFeastFromChurchMoment(thisYearsPascha, this.churchDayMoment,);
+        this.variableFeast = returnVariableFeastFromChurchMoment(thisYearsPascha, this.churchDayMoment);
         this.greatFeast = returnGreatFeastFromChurchMoment(this.churchDayMoment);
         this.commemoratedSaints = returnCommemoratedSaintsFromChurchMoment(this.churchDayMoment);
     }

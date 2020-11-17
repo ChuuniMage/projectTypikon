@@ -8,6 +8,8 @@ test('Test what the weekday is', () => {
     expect(churchMoment(currentDateTime).format('dddd')).toBe("Tuesday");
 });
 
+
+
 // test('churchYear() should convert current year to byzantine year BEFORE september', () => {
 
 //     let currentDateTime = moment('2020-01-01');

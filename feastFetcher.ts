@@ -2,7 +2,7 @@ import moment from 'moment';
 //
 import { FeastType } from './finishedModules/feastType';
 import { variableFeastList, variableFeast, returnVariableFeastMoment } from './variableFeasts';
-import { greatFeastList, greatFeast } from './dataEntryNeeded/greatFeasts';
+import { greatFeastList, greatFeast } from '../dataEntryNeeded/greatFeasts';
 import { paschaFeast, pascha2020 } from './finishedModules/paschaCalculation'
 
 type feastFetchable = paschaFeast | variableFeast | greatFeast;

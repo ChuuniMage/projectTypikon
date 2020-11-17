@@ -14,6 +14,7 @@ let c = calculatedYear % 19;
 let d = (19*c + 15) % 30;
 let e = (2*a + 4*b - d + 34) % 7 ;
 let monthOfPascha = Math.trunc((d + e + 114) / 31);
+
 inputMoment = churchMoment(inputMoment);
     if (monthOfPascha == 4){
         inputMoment.month("April");
