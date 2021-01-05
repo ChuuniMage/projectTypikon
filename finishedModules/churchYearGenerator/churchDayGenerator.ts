@@ -1,10 +1,10 @@
 import moment from 'moment';
 import { convertToObject } from 'typescript'; 
-import { returnGreatFeastFromChurchMoment } from "./finishedModules/greatFeasts";
-import { paschaCalculation, } from "./finishedModules/paschaCalculation"
-import { churchMoment } from './finishedModules/churchMoment';
-import { returnVariableFeastFromChurchMoment } from './finishedModules/variableFeasts'
-import { returnCommemoratedSaintsFromChurchMoment } from '../dataEntryNeeded/commemoratedSaints'
+import { returnGreatFeastFromChurchMoment } from "../feastCalculations/greatFeasts";
+import { paschaMoment, paschaFromChurchDay } from "../feastCalculations/paschaCalculation"
+import { churchMoment } from '../churchMoment/churchMoment';
+import { returnVariableFeastFromChurchMoment } from '../feastCalculations/variableFeasts'
+import { returnCommemoratedSaintsFromChurchMoment } from '../feastCalculations/commemoratedSaints'
 
 interface churchDayType {
     isPascha: boolean;
@@ -23,28 +23,14 @@ export class churchDay implements churchDayType {
     public commemoratedSaints: string[];
 
 
-    constructor(normieDayMoment: moment.Moment) {
-        this.churchDayMoment = churchMoment(normieDayMoment.clone());
+    constructor(inputChurchDayMoment: moment.Moment) {
+        this.churchDayMoment = inputChurchDayMoment.clone();
 
-        let thisYearsPascha = paschaCalculation(normieDayMoment.clone());
+        let thisYearsPascha = paschaFromChurchDay(inputChurchDayMoment).clone();
         this.isPascha = thisYearsPascha.isSame(this.churchDayMoment, 'day');
 
         this.variableFeast = returnVariableFeastFromChurchMoment(thisYearsPascha, this.churchDayMoment);
         this.greatFeast = returnGreatFeastFromChurchMoment(this.churchDayMoment);
         this.commemoratedSaints = returnCommemoratedSaintsFromChurchMoment(this.churchDayMoment);
     }
-}
-
-
-
-interface churchMonth {
-    name:string;
-    numberOfDays:number;
-    churchDays:churchDay[];
-}
-
-interface churchYear {
-    numberOfYear:number;
-    numberOfChurchYear:number;
-    churchMonths:churchMonth[];
 }

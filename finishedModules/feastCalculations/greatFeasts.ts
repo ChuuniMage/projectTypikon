@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-let greatFeastDictionary: Record<string, Record<number, string>> = {
+export let greatFeastDictionary: Record<string, Record<number, string>> = {
     "September": {
         8: 'Nativity of the Theotokos',
         14: 'Elevation of the Holy Cross'
@@ -28,6 +28,9 @@ let greatFeastDictionary: Record<string, Record<number, string>> = {
 
 export function returnGreatFeastFromChurchMoment(inputChurchMoment:moment.Moment):string|undefined{
     let monthDictionary = greatFeastDictionary[inputChurchMoment.format("MMMM")];
+    if (monthDictionary == undefined){
+        return undefined
+    }
     let dayIndex = inputChurchMoment.date();
     return monthDictionary[dayIndex];
 }

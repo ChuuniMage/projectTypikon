@@ -1,13 +1,12 @@
 import moment from 'moment';
 import { convertToObject } from 'typescript';
-import { churchMoment } from './churchMoment';
+import { churchMoment } from '../../finishedModules/churchMoment/churchMoment';
 
 test('churchYear() should convert current year to byzantine year BEFORE september', () => {
     expect(churchMoment(moment('2020-01-01')).year()).toBe(7528);
 })
 
 test('churchYear() should convert current year to byzantine year AFTER september', () => {
-
     // console.log(currentDateTime);
     // console.log(churchYear(currentDateTime));
     expect(churchMoment(moment()).year()).toBe(7529);
