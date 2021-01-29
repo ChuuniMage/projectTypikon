@@ -7,7 +7,7 @@ import { churchYear } from '../../finishedModules/churchYearGenerator/churchYear
 
 
 test('Test all days in April ', () => {
-  let newPaschaMoment = paschaMoment(moment().month("February"));
+  let newPaschaMoment = paschaMoment(moment().month("February").year(2020));
   let particularChurchYear = new churchYear(newPaschaMoment);
   let testedApril = particularChurchYear.churchMonths[7];
   expect(testedApril.name).toBe('April');

@@ -10,7 +10,7 @@ test('Test if paschaMoment(2020) has the right number of months:', () => {
 })
 
 test('Test if every year in paschaMoment(2020)s months is 7528:', () =>{
-  let particularChurchYear = new churchYear(paschaMoment(moment().month("February")));
+  let particularChurchYear = new churchYear(paschaMoment(moment().month("February").year(2020)));
   for (let i = 0; i < particularChurchYear.churchMonths.length; i++){
   let churchDayArray = particularChurchYear.churchMonths[i].churchDays
   // console.log(particularChurchYear)

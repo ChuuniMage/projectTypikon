@@ -4,8 +4,8 @@ import { convertToObject } from 'typescript';
 import { paschaMoment, paschaFromChurchDay } from '../../finishedModules/feastCalculations/paschaCalculation'
 import { churchMoment } from '../../finishedModules/churchMoment/churchMoment'
 
-let pascha2020 = paschaMoment(moment().month("March"))
-let pascha2021 = paschaMoment(moment().month("December"))
+let pascha2020 = paschaMoment(moment().month("March").year(2020))
+let pascha2021 = paschaMoment(moment().month("December").year(2020))
 
 let paschaList = [pascha2020,pascha2021]
 
@@ -21,7 +21,7 @@ test('Return 2020 pascha, 6th of April, 7528', () => {
 });
 
 test('Return 2020 pascha, 6th of April, 7528, from a Church Day', () => {
-  let unChurchMoment = churchMoment(moment().month("March"));
+  let unChurchMoment = churchMoment(moment().month("March").year(2020));
   let testedDay = paschaFromChurchDay(unChurchMoment);
     expect(testedDay.date()).toEqual(6);
     expect(testedDay.format("MMMM")).toEqual("April");
