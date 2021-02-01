@@ -1,4 +1,4 @@
-import moment from 'moment';
+import {format, getDate} from 'date-fns';
 
 export let greatFeastDictionary: Record<string, Record<number, string>> = {
     "September": {
@@ -26,11 +26,11 @@ export let greatFeastDictionary: Record<string, Record<number, string>> = {
     },
 }
 
-export function returnGreatFeastFromChurchMoment(inputChurchMoment:moment.Moment):string|undefined{
-    let monthDictionary = greatFeastDictionary[inputChurchMoment.format("MMMM")];
+export function returnGreatFeastFromChurchDate(inputChurchDate:Date):string|undefined{
+    let monthDictionary = greatFeastDictionary[format(inputChurchDate,"MMMM")];
     if (monthDictionary == undefined){
         return undefined
     }
-    let dayIndex = inputChurchMoment.date();
+    let dayIndex = getDate(inputChurchDate);
     return monthDictionary[dayIndex];
 }

@@ -1,4 +1,5 @@
-import moment from 'moment';
+import { differenceInCalendarDays, getYear, isSameDay } from 'date-fns';
+import {paschaFromByzantineYear} from './paschaDate/paschaDate'
 //52 Sundays of the church year
 
 let prePaschaVariableSundays: Record<number, string> = {
@@ -113,11 +114,12 @@ function returnPreOrPostPaschaVariableFeast(dictionaryIndex:number){
     }
 };
 
-export function returnVariableFeastFromChurchMoment(inputPaschaMoment:moment.Moment, inputMoment:moment.Moment):string|undefined{
-    let isThisDayPascha = inputPaschaMoment.isSame(inputMoment, 'day');
+export function returnVariableFeastFromChurchDate(inputTestedChurchDate:Date):string|undefined{
+    let workedPascha = paschaFromByzantineYear(getYear(inputTestedChurchDate))
+    let isThisDayPascha = isSameDay(inputTestedChurchDate, workedPascha)
     if(!isThisDayPascha){ 
         // moment(testedDay).diff(compareDay) returns negative if tested day is before, not after
-        let dictionaryIndex = inputMoment.diff(inputPaschaMoment, 'days');
+        let dictionaryIndex = differenceInCalendarDays(inputTestedChurchDate,workedPascha)
         return returnPreOrPostPaschaVariableFeast(dictionaryIndex);
             }
 };

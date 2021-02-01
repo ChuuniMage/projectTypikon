@@ -1,6 +1,8 @@
-export function returnCommemoratedSaintsFromChurchMoment(inputChurchMoment:moment.Moment):string[]{
-  let monthDictionary = saintCommemorationDictionary[inputChurchMoment.format("MMMM")];
-  let dayIndex = inputChurchMoment.date();
+import {format, getDate} from 'date-fns'
+
+export function returnCommemoratedSaintsFromChurchDate(inputChurchDate:Date):string[]{
+  let monthDictionary = saintCommemorationDictionary[format(inputChurchDate,"MMMM")];
+  let dayIndex = getDate(inputChurchDate)
   return monthDictionary[dayIndex];
 }
 

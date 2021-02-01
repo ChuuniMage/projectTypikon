@@ -1,18 +1,18 @@
-import moment from 'moment';
+import { getYear } from 'date-fns'
 import { churchMonth } from './churchMonthGenerator';
 
 interface churchYearType {
-    paschaMoment:moment.Moment;
+    paschaDate:Date;
     churchYearNumber:number;
     churchMonths:churchMonth[];
 }
 
 export class churchYear implements churchYearType {
-    paschaMoment:moment.Moment;
+    paschaDate:Date;
     churchYearNumber:number;
     churchMonths:churchMonth[];
-    constructor(inputPaschaMoment:moment.Moment){
-        this.paschaMoment = inputPaschaMoment.clone();
+    constructor(inputPaschaDate:Date){
+        this.paschaDate = inputPaschaDate;
         let monthList = [
             `September`,
             `October`,
@@ -26,11 +26,10 @@ export class churchYear implements churchYearType {
             `June`,
             `July`,
             `August`]
-        this.churchYearNumber = inputPaschaMoment.year();
+        this.churchYearNumber = getYear(inputPaschaDate);
         let workingChurchMonthList:churchMonth[] = [];
         for (let i = 0; i < monthList.length; i++){
-            let workedPaschaMoment = inputPaschaMoment.clone();
-            let workingChurchMonth = new churchMonth(workedPaschaMoment, monthList[i]);
+            let workingChurchMonth = new churchMonth(this.paschaDate, monthList[i]);
             workingChurchMonthList.push(workingChurchMonth);
         }
         this.churchMonths = workingChurchMonthList

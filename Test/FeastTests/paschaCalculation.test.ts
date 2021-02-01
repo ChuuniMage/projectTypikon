@@ -6,8 +6,18 @@ import { churchMoment } from '../../finishedModules/churchMoment/churchMoment'
 
 let pascha2020 = paschaMoment(moment().month("March").year(2020))
 let pascha2021 = paschaMoment(moment().month("December").year(2020))
+let pascha2022 = paschaMoment(moment().month("March").year(2022))
+let pascha2023 = paschaMoment(moment().month("March").year(2023))
 
 let paschaList = [pascha2020,pascha2021]
+
+test("is pascha sunday", () => {
+  console.log(pascha2020.format("YYYY dddd"))
+  console.log(pascha2021.format("YYYY dddd"))
+  console.log(pascha2022.format("YYYY dddd"))
+  console.log(pascha2023.format("YYYY dddd"))
+  expect(paschaList[1].format("dddd")).toEqual("Sunday")
+})
 
 test('Return 2020 pascha, 6th of April, 7528', () => {
  
@@ -36,6 +46,8 @@ test('Return 2016 pascha, 18th of April, 7524', () => {
     expect(testedMoment.year()).toEqual(7524);
     //
 });
+
+
 
 // test('Return 2021 pascha, 19th of April, 7529', () => {
 //   console.log(paschaList[1]);

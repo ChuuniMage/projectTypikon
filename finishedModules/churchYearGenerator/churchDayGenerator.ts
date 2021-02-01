@@ -1,36 +1,58 @@
-import moment from 'moment';
-import { convertToObject } from 'typescript'; 
-import { returnGreatFeastFromChurchMoment } from "../feastCalculations/greatFeasts";
-import { paschaMoment, paschaFromChurchDay } from "../feastCalculations/paschaCalculation"
-import { churchMoment } from '../churchMoment/churchMoment';
-import { returnVariableFeastFromChurchMoment } from '../feastCalculations/variableFeasts'
-import { returnCommemoratedSaintsFromChurchMoment } from '../feastCalculations/commemoratedSaints'
+import { returnGreatFeastFromChurchDate } from "../feastCalculations/greatFeasts";
+import { paschaFromByzantineYear } from "../feastCalculations/paschaDate/paschaDate"
+import { returnVariableFeastFromChurchDate } from '../feastCalculations/variableFeasts'
+import { returnCommemoratedSaintsFromChurchDate } from '../feastCalculations/commemoratedSaints'
+import { differenceInCalendarDays, getYear, isSameDay } from 'date-fns';
 
 interface churchDayType {
     isPascha: boolean;
     greatFeast:string|undefined;
     variableFeast:string|undefined;
     commemoratedSaints:string[];
-    churchDayMoment:moment.Moment; // will have date, month, year, etc
+    churchDate:Date; // will have date, month, year, etc
 }
 
+type weekDay = "Sunday" 
+| "Monday" 
+| "Tuesday" 
+| "Wednesday" 
+| "Thursday"
+| "Friday"
+| "Saturday"
+
+let weekdayArray:weekDay[] = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+]
+
 export class churchDay implements churchDayType {
-    public churchDayMoment: moment.Moment;
+    public churchDate: Date;
     public isPascha: boolean;
     public variableFeast: string | undefined = undefined;
-
+    public weekday:weekDay;
     public greatFeast: string | undefined = undefined;
     public commemoratedSaints: string[];
 
 
-    constructor(inputChurchDayMoment: moment.Moment) {
-        this.churchDayMoment = inputChurchDayMoment.clone();
+    constructor(inputChurchDate: Date) {
+        this.churchDate = inputChurchDate;
 
-        let thisYearsPascha = paschaFromChurchDay(inputChurchDayMoment).clone();
-        this.isPascha = thisYearsPascha.isSame(this.churchDayMoment, 'day');
+        let thisYearsPascha = paschaFromByzantineYear(getYear(inputChurchDate));
+        this.isPascha = isSameDay(thisYearsPascha,inputChurchDate)
 
-        this.variableFeast = returnVariableFeastFromChurchMoment(thisYearsPascha, this.churchDayMoment);
-        this.greatFeast = returnGreatFeastFromChurchMoment(this.churchDayMoment);
-        this.commemoratedSaints = returnCommemoratedSaintsFromChurchMoment(this.churchDayMoment);
+        let weekdayIndex = (differenceInCalendarDays(thisYearsPascha, this.churchDate) % 7)
+        if (weekdayIndex < 0) {
+            weekdayIndex = weekdayIndex * -1
+        }
+        this.weekday = weekdayArray[weekdayIndex]
+
+        this.variableFeast = returnVariableFeastFromChurchDate(this.churchDate);
+        this.greatFeast = returnGreatFeastFromChurchDate(this.churchDate);
+        this.commemoratedSaints = returnCommemoratedSaintsFromChurchDate(this.churchDate);
     }
 }
