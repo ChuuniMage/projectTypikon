@@ -1,5 +1,5 @@
 import { paschaDateFromWorldYear } from '../../finishedModules/feastCalculations/paschaDate/paschaDate';
-import { churchMonth } from '../../finishedModules/churchYearGenerator/churchMonthGenerator'
+import { churchMonth, returnChurchWeeks} from '../../finishedModules/churchYearGenerator/churchMonthGenerator'
 import { getYear } from 'date-fns'
 
 test('Test if December is Stable', () =>{
@@ -26,4 +26,17 @@ test("Expect February to have the right leap year days", () => {
   expect(particularChurchMonth2021.numberOfDays).toEqual(28)
   expect(particularChurchMonth2021.churchYear).toEqual(7529)
   expect(particularChurchMonth2021.churchDays.length).toEqual(28)
+})
+
+test("expect return church weeks to not be null", () => {
+  let particularChurchMonth2020 = new churchMonth(paschaDateFromWorldYear(2020), "September")
+  let testedDays = particularChurchMonth2020.churchDays
+expect(returnChurchWeeks(particularChurchMonth2020.churchDays)).toEqual(
+  [
+    testedDays.slice(0,6),
+    testedDays.slice(6,13),
+    testedDays.slice(13,20),
+    testedDays.slice(20,27),
+    testedDays.slice(27,30)
+  ])
 })
