@@ -20,7 +20,7 @@ type weekDay = "Sunday"
 | "Friday"
 | "Saturday"
 
-let weekdayArray:weekDay[] = [
+let weekdayArray:string[] = [
     "Sunday",
     "Monday",
     "Tuesday",
@@ -34,7 +34,7 @@ export class churchDay implements churchDayType {
     public churchDate: Date;
     public isPascha: boolean;
     public variableFeast: string | undefined = undefined;
-    public weekday:weekDay;
+    public weekday:string;
     public greatFeast: string | undefined = undefined;
     public commemoratedSaints: string[];
 
