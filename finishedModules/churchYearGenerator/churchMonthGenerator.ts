@@ -1,5 +1,7 @@
 import { churchDay } from './churchDayGenerator';
 import { getDaysInMonth, getYear, setDate, setMonth } from 'date-fns'
+import { paschaDateFromWorldYear } from '../feastCalculations/paschaDate/paschaDate';
+import { churchDate } from '../churchDate/churchDate';
 
 interface churchMonthType {
     name:string;
@@ -73,3 +75,29 @@ export class churchMonth implements churchMonthType {
     }
 }
 
+export let returnChurchWeeks = (inputDays:churchDay[]):churchDay[][] => {
+    let outputWeekArray:churchDay[][] = []
+    let monthOffset = (inputDays.length % 7)
+    let numberOfweeks = Math.floor(inputDays.length / 7)
+    //If Sunday, do everything as normal
+    //Offset returns the straggling end of week
+    if (inputDays[0].weekday === "Sunday"){
+      let weekOffset = 0;
+      for (let i = 0; i<numberOfweeks; i++){
+        outputWeekArray.push(inputDays.slice(0+weekOffset,7+weekOffset))
+        weekOffset = weekOffset + 7
+      }
+      if (monthOffset > 0){
+        outputWeekArray.push(inputDays.slice(0+weekOffset,monthOffset+weekOffset));
+        }
+      return outputWeekArray
+    }
+    // if not Sunday, MAKE START WITH SUNDAY, and recall and offset, attach first week
+    for (let offset = 1; offset<8; offset++){
+      if (inputDays[offset].weekday === "Saturday"){
+        outputWeekArray = returnChurchWeeks(inputDays.slice(offset+1,50))
+        outputWeekArray.unshift(inputDays.slice(0,offset+1))
+      }
+    }
+    return outputWeekArray
+  }
