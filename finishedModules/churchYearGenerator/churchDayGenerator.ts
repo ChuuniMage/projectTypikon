@@ -2,7 +2,7 @@ import { returnGreatFeastFromChurchDate } from "../feastCalculations/greatFeasts
 import { paschaFromByzantineYear } from "../feastCalculations/paschaDate/paschaDate"
 import { returnVariableFeastFromChurchDate } from '../feastCalculations/variableFeasts'
 import { returnCommemoratedSaintsFromChurchDate } from '../feastCalculations/commemoratedSaints'
-import { differenceInCalendarDays, getYear, isSameDay } from 'date-fns';
+import { differenceInCalendarDays, getYear, isSameDay, isBefore } from 'date-fns';
 
 interface churchDayType {
     isPascha: boolean;
@@ -10,6 +10,7 @@ interface churchDayType {
     variableFeast:string|undefined;
     commemoratedSaints:string[];
     churchDate:Date; // will have date, month, year, etc
+    weekday:string;
 }
 
 type weekDay = "Sunday" 
@@ -44,8 +45,15 @@ export class churchDay implements churchDayType {
 
         let thisYearsPascha = paschaFromByzantineYear(getYear(inputChurchDate));
         this.isPascha = isSameDay(thisYearsPascha,inputChurchDate)
+        // Do it differently for every Post-Jan month that is before Pascha's month
 
         let weekdayIndex = (differenceInCalendarDays(thisYearsPascha, this.churchDate) % 7)
+        
+        if (isBefore(this.churchDate, thisYearsPascha)){
+            //differenceInCalendarDays returns backwards dates from pascha, ie Monday->Sunday->Saturday
+            // This fixes that issue
+            weekdayIndex = (((weekdayIndex * -1) +7) % 7)
+        }
         if (weekdayIndex < 0) {
             weekdayIndex = weekdayIndex * -1
         }

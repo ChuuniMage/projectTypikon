@@ -1,6 +1,6 @@
 import { paschaDateFromWorldYear } from '../../finishedModules/feastCalculations/paschaDate/paschaDate';
 import { churchMonth, returnChurchWeeks} from '../../finishedModules/churchYearGenerator/churchMonthGenerator'
-import { getYear } from 'date-fns'
+import { getDate, getYear } from 'date-fns'
 
 test('Test if December is Stable', () =>{
   let particularChurchMonth = new churchMonth(paschaDateFromWorldYear(2021), "December");
@@ -40,3 +40,16 @@ expect(returnChurchWeeks(particularChurchMonth2020.churchDays)).toEqual(
     testedDays.slice(27,30)
   ])
 })
+
+test("expect january to be normal", () => {
+  let particularChurchMonth2020 = new churchMonth(paschaDateFromWorldYear(2020), "January")
+  let testedDays = particularChurchMonth2020.churchDays
+  console.log(testedDays.map(day => `${getDate(day.churchDate)} ${day.weekday}`))
+  for (let i = 0; i<testedDays.length; i++){
+        
+    if (testedDays[i].weekday === "Sunday" && testedDays[i+1] !== undefined){
+      expect(testedDays[i+1].weekday === "Monday").toEqual(true)
+    }
+  }
+})
+
